@@ -298,6 +298,13 @@ fi
 
 echo "$REPO_BRANCH-$CORE_BRANCH$RELEASE_MANIFEST" > .last_branch
 
+if [ "$RELEASE_TYPE" = "CM_CUSTOM" ]
+then
+  unset CM_EXPERIMENTAL
+  unset CM_NIGHTLY
+  unset CM_RELEASE
+fi
+
 time mka bacon recoveryzip recoveryimage checkapi
 check_result "Build failed."
 
