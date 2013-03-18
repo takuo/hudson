@@ -321,6 +321,9 @@ then
   cp $OUT/recovery.img $WORKSPACE/archive
 fi
 
+# GERRIT CHANGES
+echo ${GERRIT_CHANGES} > $WORKSPACE/archive/gerrit_changes.txt
+
 # archive the build.prop as well
 ZIP=$(ls $WORKSPACE/archive/cm-*.zip)
 unzip -p $ZIP system/build.prop > $WORKSPACE/archive/build.prop
