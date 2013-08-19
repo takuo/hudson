@@ -133,16 +133,20 @@ fi
 mkdir -p .repo/local_manifests
 rm -f .repo/local_manifest.xml
 
-rm -rf $WORKSPACE/build_env
-git clone https://github.com/CyanogenMod/cm_build_config.git $WORKSPACE/build_env
-check_result "Bootstrap failed"
+## disabled:  cm_build_config is not public.
+#rm -rf $WORKSPACE/build_env
+#git clone https://github.com/CyanogenMod/cm_build_config.git $WORKSPACE/build_env
+#check_result "Bootstrap failed"
 
-if [ -f $WORKSPACE/build_env/bootstrap.sh ]
-then
-  bash $WORKSPACE/build_env/bootstrap.sh
-fi
+#if [ -f $WORKSPACE/build_env/bootstrap.sh ]
+#then
+#  bash $WORKSPACE/build_env/bootstrap.sh
+#fi
+#
+#cp $WORKSPACE/build_env/$REPO_BRANCH.xml .repo/local_manifests/dyn-$REPO_BRANCH.xml
 
-cp $WORKSPACE/build_env/$REPO_BRANCH.xml .repo/local_manifests/dyn-$REPO_BRANCH.xml
+# use static xml instead.
+cp $WORKSPACE/hudson/$REPO_BRANCH.xml .repo/local_manifests/dyn-$REPO_BRANCH.xml
 
 echo Core Manifest:
 cat .repo/manifest.xml
@@ -151,13 +155,13 @@ cat .repo/manifest.xml
 ## up posterior syncs due to changes
 rm -rf kernel/*
 
-if [ "$RELEASE_TYPE" = "CM_RELEASE" ]
-then
-  if [ -f  $WORKSPACE/build_env/$REPO_BRANCH-release.xml ]
-  then
-    cp -f $WORKSPACE/build_env/$REPO_BRANCH-release.xml .repo/local_manifests/dyn-$REPO_BRANCH.xml
-  fi
-fi
+#if [ "$RELEASE_TYPE" = "CM_RELEASE" ]
+#then
+#  if [ -f  $WORKSPACE/build_env/$REPO_BRANCH-release.xml ]
+#  then
+#    cp -f $WORKSPACE/build_env/$REPO_BRANCH-release.xml .repo/local_manifests/dyn-$REPO_BRANCH.xml
+#  fi
+#fi
 
 echo Syncing...
 repo sync -d -c > /dev/null
